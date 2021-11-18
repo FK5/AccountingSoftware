@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class UserFactory extends Factory
+class CompanyFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,17 +14,16 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $gender = 'male';
         return [
-            'first_name' => $this->faker->firstName($gender),
-            'last_name' => $this->faker->lastName(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'gender' => $gender,
-            'status' => $this->faker->randomElement(['approved', 'pending', 'blocked']),
-            'date_of_birth' => now(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'company_name' => $company_name = $this->faker->company(),
+            'legal_name' => $this->faker->company(),
+            'business_id' => $this->faker->numberBetween(1000, 9000),
+            'company_email' => $this->faker->unique()->safeEmail(),
+            'company_phone_number' => $this->faker->phoneNumber(),
+            'company_address' => $this->faker->address(),
+            'industry' => 'Entertainment',
+            'website' => $company_name.".com",
+            'approved' => $this->faker->numberBetween(0, 1),
         ];
     }
 

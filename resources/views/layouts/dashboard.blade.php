@@ -54,19 +54,24 @@
 
             <!-- Nav Item - Tables -->
             {{-- @if (Auth::user()->isManager() or Auth::user()->isSuperAdmin()) --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">
-                        <i class="fas fa-fw fa-building"></i>
-                        <span>Companies</span></a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('home') }}">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Users</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('home') }}">
+                    <i class="fas fa-fw fa-building"></i>
+                    <span>Companies</span></a>
+            </li>
             {{-- @endif --}}
             
             {{-- @if (Auth::user()->isSuperAdmin()) --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">
-                        <i class="fas fa-fw fa-user"></i>
-                        <span>Customers</span></a>
-                </li>
+            {{-- <li class="nav-item">
+                <a class="nav-link" href="{{ route('home') }}">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Customers</span></a>
+            </li> --}}
             {{-- @endif --}}
             {{-- SIDE NAV BAR FOR WEBMASTER --}}
             {{-- @if (Auth::user()->isWebMaster())
@@ -122,15 +127,15 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{-- Auth::user()->name --}}</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->first_name." ".Auth::user()->last_name }}</span>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                {{-- <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('users.edit', Auth::user()->id ) }}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
-                                </a> --}}
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
