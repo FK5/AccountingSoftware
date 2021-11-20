@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\company;
+use App\Models\Company;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -15,7 +16,17 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = company::all();
+        $this->authorize('viewAny',Company::class);
+        $user_role = Auth::user()->role;
+        if(!empty($user_role)){
+            if($user_role->id == Role::IS_COMPANY_WEBMASTER){
+                $companies = Company::all()->where('user_id',Auth::user()->id);
+            }else{
+                $companies = Company::all();
+            }
+        }else{
+            $companies = Company::all();
+        }
         return view('companies.index', compact('companies'));
     }
 
@@ -26,6 +37,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
+        $this->authorize('create',Company::class);
         return view('companies.create');
     }
 
@@ -37,6 +49,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create',Company::class);
         $user=Auth::user();
         $rules = [
             'company_name' => 'required|max:255',
@@ -54,7 +67,12 @@ class CompanyController extends Controller
         if(!$request->has('approved'))$approved=false;else$approved=true;
         $data = $request->all();
         $data['approved']= $approved;
+        
         $latest = Company::create($data);
+        if($user->role->id == Role::IS_COMPANY_WEBMASTER){
+            $latest->user_id = $user->id;
+        }
+        $latest->save();
         return redirect()->route('companies.index');
     }
 
@@ -77,6 +95,7 @@ class CompanyController extends Controller
      */
     public function edit(company $company)
     {
+        $this->authorize('update',$company);
         return view('companies.edit', compact('company'));
     }
 
@@ -89,6 +108,7 @@ class CompanyController extends Controller
      */
     public function update(Request $request, company $company)
     {
+        $this->authorize('update',$company);
         $rules = [
             'company_name' => 'required|max:255',
             'legal_name' => 'required|max:255',
@@ -118,12 +138,14 @@ class CompanyController extends Controller
      */
     public function destroy(company $company)
     {
+        $this->authorize('delete',$company);
         $company->delete();
         return redirect()->route('companies.index');
     }
 
     public function delete(company $company)
     {
+        $this->authorize('delete',$company);
         return view('companies.delete', ['company'=>$company]);
     }
 }

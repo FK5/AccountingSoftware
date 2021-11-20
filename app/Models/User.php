@@ -48,40 +48,33 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     
-    // public function role (){
-    //     return $this->belongsTo(Role::class);
-    // }
+    public function role (){
+        return $this->belongsTo(Role::class);
+    }
 
     // public function companies(){
     //     return $this->belongsToMany(Company::class);
     // }
 
-    // public function isManager(){
-    //     if($this->role->slug == 'm'){
-    //         return true;
-    //     }else{
-    //         return false;
-    //     }
-    // }
-    // public function isSuperAdmin(){
-    //     if($this->role->slug == 'sa'){
-    //         return true;
-    //     }else{
-    //         return false;
-    //     }
-    // }
-    // public function isWebMaster(){
-    //     if($this->role->slug == 'cw'){
-    //         return true;
-    //     }else{
-    //         return false;
-    //     }
-    // }
-    // public function isWebOfficer(){
-    //     if($this->role->slug == 'co'){
-    //         return true;
-    //     }else{
-    //         return false;
-    //     }
-    // }
+    public function isManager(){
+        if($this->role->id == Role::IS_MANAGER){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function isWebMaster(){
+        if($this->role->id == Role::IS_COMPANY_WEBMASTER){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function isWebOfficer(){
+        if($this->role->id == Role::IS_COMPANY_OFFICER){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

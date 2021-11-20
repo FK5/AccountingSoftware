@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddStatusColumnToUser extends Migration
+class AddRoleColumnToUser extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class AddStatusColumnToUser extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('status')->default('pending');
+            $table->foreignId('role_id')->nullable();
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
     }
 
@@ -26,7 +27,8 @@ class AddStatusColumnToUser extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('status');
+            $table->dropForeign(['role_id']);
+            $table->dropColumn('role_id');
         });
     }
 }

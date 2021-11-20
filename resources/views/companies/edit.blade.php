@@ -2,7 +2,6 @@
 
 @section('content')
 
-  {{--  route('tasks.update', $task->id) --}}
   <form method="POST" class="row-6" action="{{route('companies.update',$company->id)}}">
     @csrf
     @method('PUT')

@@ -53,45 +53,54 @@
             <hr class="sidebar-divider">
 
             <!-- Nav Item - Tables -->
-            {{-- @if (Auth::user()->isManager() or Auth::user()->isSuperAdmin()) --}}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('home') }}">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>Users</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('home') }}">
-                    <i class="fas fa-fw fa-building"></i>
-                    <span>Companies</span></a>
-            </li>
-            {{-- @endif --}}
-            
-            {{-- @if (Auth::user()->isSuperAdmin()) --}}
-            {{-- <li class="nav-item">
-                <a class="nav-link" href="{{ route('home') }}">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>Customers</span></a>
-            </li> --}}
-            {{-- @endif --}}
-            {{-- SIDE NAV BAR FOR WEBMASTER --}}
-            {{-- @if (Auth::user()->isWebMaster())
+
+            <!-- Super User Navbar -->
+            @if (Auth::user()->id == '1')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('webmaster.companies') }}">
-                        <i class="fas fa-fw fa-building"></i>
-                        <span>My Companies</span></a>
+                    <a class="nav-link" href="{{ route('users.index') }}">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>Users</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('webmaster.gotoproducts') }}">
-                        <i class="fas fa-fw fa-tags"></i>
+                    <a class="nav-link" href="{{ route('companies.index') }}">
+                        <i class="fas fa-fw fa-building"></i>
+                        <span>Companies</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('home') }}">
+                        <i class="fas fa-fw fa-shopping-basket"></i>
                         <span>Products</span></a>
-                </li> --}}
-                {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('webmaster.gotoinvoices') }}">
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('home') }}">
                         <i class="fas fa-fw fa-file-invoice-dollar"></i>
                         <span>Invoices</span></a>
-                </li> --}}
-
-            {{-- @endif --}}
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('home') }}">
+                        <i class="fas fa-fw fa-money-bill-wave"></i>
+                        <span>Payents</span></a>
+                </li>
+            @else
+            <!-- Users with Roles Side navbar -->
+                @can('viewAny', App\Models\Company::class)
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('companies.index') }}">
+                            <i class="fas fa-fw fa-building"></i>
+                            <span>Companies</span></a>
+                    </li>
+                @endcan  
+            @endif
+            {{-- @can('viewAny', App\Models\User::class)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('users.index') }}">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>Users</span></a>
+                </li>
+            @endcan --}}
+            
+            
+          
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

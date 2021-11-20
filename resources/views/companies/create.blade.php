@@ -2,7 +2,6 @@
 
 @section('content')
 
-  {{--  route('tasks.update', $task->id) --}}
   <form method="POST" class="row-6" action="{{route('companies.store')}}">
     @csrf
     @method('POST')
@@ -65,10 +64,12 @@
                     <span class="text-danger">{{ $errors->first('website') }}</span>
             @endif
           </div>
-          <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="approved" name="approved" >
-            <label class="form-check-label" for="approved">Approved</label>
-          </div>
+          @if(Auth::user()->id == 1 or Auth::user()->isManager())
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="approved" name="approved" >
+              <label class="form-check-label" for="approved">Approved</label>
+            </div>
+          @endif
           <button type="submit" class="btn btn-primary">Create</button>
         </div>
       </div>  
