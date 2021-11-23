@@ -150,144 +150,162 @@ class DatabaseSeeder extends Seeder
                 'slug' => 'Can Delete Payment',
             ]);
         //Role Permission Seed
-        DB::table('permission_role')->insert([
-            'role_id' => 1,
-            'permission_id' => 1,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 1,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 1,
-            'permission_id' => 2,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 2,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 1,
-            'permission_id' => 3,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 3,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 1,
-            'permission_id' => 4,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 4,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 9,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 10,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 11,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 12,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 13,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 3,
-            'permission_id' => 13,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 14,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 3,
-            'permission_id' => 14,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 15,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 3,
-            'permission_id' => 15,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 17,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 3,
-            'permission_id' => 17,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 18,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 3,
-            'permission_id' => 18,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 19,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 3,
-            'permission_id' => 19,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 20,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 3,
-            'permission_id' => 20,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 21,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 3,
-            'permission_id' => 21,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 22,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 3,
-            'permission_id' => 22,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 23,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 3,
-            'permission_id' => 23,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 2,
-            'permission_id' => 24,
-        ]);
-        DB::table('permission_role')->insert([
-            'role_id' => 3,
-            'permission_id' => 24,
-        ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 1,
+                'permission_id' => 1,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 1,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 1,
+                'permission_id' => 2,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 2,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 1,
+                'permission_id' => 3,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 3,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 1,
+                'permission_id' => 4,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 4,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 9,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 10,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 11,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 12,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 13,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 3,
+                'permission_id' => 13,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 14,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 3,
+                'permission_id' => 14,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 15,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 3,
+                'permission_id' => 15,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 16,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 17,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 3,
+                'permission_id' => 17,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 18,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 3,
+                'permission_id' => 18,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 19,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 3,
+                'permission_id' => 19,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 20,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 3,
+                'permission_id' => 20,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 21,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 3,
+                'permission_id' => 21,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 22,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 3,
+                'permission_id' => 22,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 23,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 3,
+                'permission_id' => 23,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 2,
+                'permission_id' => 24,
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => 3,
+                'permission_id' => 24,
+            ]);
+        //Categories
+            DB::table('categories')->insert([
+                'name' => 'Industry',
+            ]);
+            DB::table('categories')->insert([
+                'name' => 'Functionality',
+            ]);
+            DB::table('categories')->insert([
+                'name' => 'Convenience',
+            ]);
+            DB::table('categories')->insert([
+                'name' => 'Quality',
+            ]);
         \App\Models\User::factory(3)->create();
         \App\Models\Company::factory(5)->create();
+        \App\Models\Customer::factory(5)->create();
         
     }
 }

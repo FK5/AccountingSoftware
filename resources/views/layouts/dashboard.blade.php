@@ -62,14 +62,24 @@
                         <span>Users</span></a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('roles.index') }}">
+                        <i class="fas fa-fw fa-user-tag"></i>
+                        <span>Roles</span></a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('companies.index') }}">
                         <i class="fas fa-fw fa-building"></i>
                         <span>Companies</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">
+                    <a class="nav-link" href="{{ route('products.index') }}">
                         <i class="fas fa-fw fa-shopping-basket"></i>
                         <span>Products</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('customers.index') }}">
+                        <i class="fas fa-fw fa-users"></i>
+                        <span>Customers</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
@@ -89,15 +99,16 @@
                             <i class="fas fa-fw fa-building"></i>
                             <span>Companies</span></a>
                     </li>
-                @endcan  
-            @endif
-            {{-- @can('viewAny', App\Models\User::class)
+                @endcan
+                @can('viewAny', App\Models\Product::class)
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('users.index') }}">
-                        <i class="fas fa-fw fa-user"></i>
-                        <span>Users</span></a>
+                    <a class="nav-link" href="{{ route('products.index') }}">
+                        <i class="fas fa-fw fa-shopping-basket"></i>
+                        <span>Products</span></a>
                 </li>
-            @endcan --}}
+                @endcan
+            @endif
+            
             
             
           

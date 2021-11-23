@@ -31,8 +31,8 @@ class company extends Model
     //     return $this->belongsTo('App\Models\User');
     // }
 
-    // public function products()
-    // {
-    //     return $this->hasMany('App\Models\Product_Service');
-    // }
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product');
+    }
 }

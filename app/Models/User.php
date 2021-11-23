@@ -52,9 +52,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Role::class);
     }
 
-    // public function companies(){
-    //     return $this->belongsToMany(Company::class);
-    // }
+    public function companies(){
+        return $this->belongsToMany(Company::class);
+    }
 
     public function isManager(){
         if($this->role->id == Role::IS_MANAGER){
@@ -70,7 +70,7 @@ class User extends Authenticatable implements MustVerifyEmail
             return false;
         }
     }
-    public function isWebOfficer(){
+    public function isOfficer(){
         if($this->role->id == Role::IS_COMPANY_OFFICER){
             return true;
         }else{

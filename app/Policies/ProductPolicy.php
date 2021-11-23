@@ -2,14 +2,14 @@
 
 namespace App\Policies;
 
-use App\Models\Company;
+use App\Models\Product;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Company;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use App\Models\Permission;
 
-
-class CompanyPolicy
+class ProductPolicy
 {
     use HandlesAuthorization;
 
@@ -28,7 +28,7 @@ class CompanyPolicy
         if(!empty($role)){
             $permissions = $role->permissions;
             foreach($permissions as $permission){
-                if($permission->id == Permission::CAN_READ_COMPANY){
+                if($permission->id == Permission::CAN_READ_PRODUCT){
                     return true;   
                 }
             }
@@ -40,12 +40,12 @@ class CompanyPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Company  $company
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Company $company)
+    public function view(User $user, Product $product)
     {
-
+        //
     }
 
     /**
@@ -56,21 +56,14 @@ class CompanyPolicy
      */
     public function create(User $user)
     {
-        //IF SUPER ADMIN
         if($user->id==1){
             return true;
-        }
-        //IF WEBMASTER OPERATES 1 OR MORE COMPANY
-        //ASSUMED HE CREATED ONE  {CAN BE IMPROVED AND ADD A FIELD IF HE CREATED}
-        $company_created = Company::where('user_id',$user->id)->count();
-        if($user->role->id == Role::IS_COMPANY_WEBMASTER && $company_created > 0){
-            return false;
         }
         $role = $user->role;
         if(!empty($role)){
             $permissions = $role->permissions;
             foreach($permissions as $permission){
-                if($permission->id == Permission::CAN_CREATE_COMPANY){
+                if($permission->id == Permission::CAN_CREATE_PRODUCT){
                     return true;   
                 }
             }
@@ -82,31 +75,40 @@ class CompanyPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Company  $company
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Company $company)
+    public function update(User $user, Product $product)
     {
-        //IF SUPER ADMIN
         if($user->id==1){
             return true;
         }
-        //IF ROLE HAS PERMISSION
         $role = $user->role;
         if(!empty($role)){
             $permissions = $role->permissions;
             foreach($permissions as $permission){
-                if($permission->id == Permission::CAN_EDIT_COMPANY){
+                if($permission->id == Permission::CAN_EDIT_PRODUCT){
                     //IF COMPANY WEBMASTER ASSIGNED
-                    if($role->id == ROLE::IS_COMPANY_WEBMASTER && $company->user_id != $user->id){
-                        return false;
-                    }else{
-                        return true;
-                    } 
+                    if($role->id == ROLE::IS_COMPANY_WEBMASTER){
+                        $companies = Company::where('user_id', $user->id)->get();
+                        $products = Product::whereIn('company_id',$companies)->get();
+                        foreach($products as $product_in_array){
+                            if($product_in_array->id == $product->id){
+                                return true;
+                            }
+                        }
+                    }elseif($role->id == ROLE::IS_COMPANY_OFFICER){
+                        $companies = $user->companies;
+                        $products = Product::whereIn('company_id',$companies)->get();
+                        foreach($products as $product_in_array){
+                            if($product_in_array->id == $product->id){
+                                return true;
+                            }
+                        }
+                    }
                 }
             }
         }
-        
         return false;
     }
 
@@ -114,10 +116,10 @@ class CompanyPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Company  $company
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Company $company)
+    public function delete(User $user, Product $product)
     {
         if($user->id==1){
             return true;
@@ -126,12 +128,25 @@ class CompanyPolicy
         if(!empty($role)){
             $permissions = $role->permissions;
             foreach($permissions as $permission){
-                if($permission->id == Permission::CAN_DELETE_COMPANY){
-                    if($role->id == ROLE::IS_COMPANY_WEBMASTER && $company->user_id != $user->id){
-                        return false;
-                    }else{
-                        return true;
-                    }   
+                if($permission->id == Permission::CAN_DELETE_PRODUCT){
+                    //IF COMPANY WEBMASTER ASSIGNED
+                    if($role->id == ROLE::IS_COMPANY_WEBMASTER){
+                        $companies = Company::where('user_id', $user->id)->get();
+                        $products = Product::whereIn('company_id',$companies)->get();
+                        foreach($products as $product_in_array){
+                            if($product_in_array->id == $product->id){
+                                return true;
+                            }
+                        }
+                    }elseif($role->id == ROLE::IS_COMPANY_OFFICER){
+                        $companies = $user->companies;
+                        $products = Product::whereIn('company_id',$companies)->get();
+                        foreach($products as $product_in_array){
+                            if($product_in_array->id == $product->id){
+                                return true;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -142,10 +157,10 @@ class CompanyPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Company  $company
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Company $company)
+    public function restore(User $user, Product $product)
     {
         //
     }
@@ -154,10 +169,10 @@ class CompanyPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Company  $company
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Company $company)
+    public function forceDelete(User $user, Product $product)
     {
         //
     }
