@@ -22,5 +22,6 @@ class customer extends Model
         'phone',
         'mobile',
         'address',
+        'company_id',
     ];
 }

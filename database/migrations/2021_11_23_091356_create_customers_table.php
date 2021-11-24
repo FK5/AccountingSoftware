@@ -22,6 +22,8 @@ class CreateCustomersTable extends Migration
             $table->string('phone');
             $table->string('mobile')->nullable();
             $table->string('address');
+            $table->foreignId('company_id')->constrainted()->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
         });
     }

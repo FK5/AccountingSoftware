@@ -44,18 +44,22 @@
             @endif
           </div>
           
-          {{-- <div class="mb-3">       //company
-            <label for="company_id" class="form-label">Company</label>
+          <div class="mb-3">
+            {{-- company id --}}
+            <label for="company_id" class="form-label">Company ID</label>
             <select class="form-select @if($errors->has('company_id'))is-invalid @endif" name="company_id" aria-label="Default select example">
-              <option selected>Open this select menu</option>
               @foreach ($companies as $company)
-                <option value="{{$company->id}}">{{$company->company_name}}</option>
+                @if ($company->id == $customer->company_id)
+                  <option value="{{ $company->id }}" selected>{{ $company->company_name }}</option>    
+                @else
+                  <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                @endif  
               @endforeach
             </select>
             @if ($errors->has('company_id'))
                     <span class="text-danger">{{ $errors->first('company_id') }}</span>
-            @endif
-          </div> --}}
+            @endif    
+          </div>
 
           <div class="mb-3">
             <label for="mobile" class="form-label">Mobile</label>

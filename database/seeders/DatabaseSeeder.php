@@ -303,9 +303,10 @@ class DatabaseSeeder extends Seeder
             DB::table('categories')->insert([
                 'name' => 'Quality',
             ]);
-        \App\Models\User::factory(3)->create();
+        \App\Models\User::factory(5)->create();
         \App\Models\Company::factory(5)->create();
-        \App\Models\Customer::factory(5)->create();
+        \App\Models\Customer::factory(10)->create();
+        \App\Models\Product::factory(15)->create();
         
     }
 }

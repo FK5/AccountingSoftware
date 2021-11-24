@@ -82,14 +82,14 @@
                         <span>Customers</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">
+                    <a class="nav-link" href="{{ route('invoices.index') }}">
                         <i class="fas fa-fw fa-file-invoice-dollar"></i>
                         <span>Invoices</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
                         <i class="fas fa-fw fa-money-bill-wave"></i>
-                        <span>Payents</span></a>
+                        <span>Payments</span></a>
                 </li>
             @else
             <!-- Users with Roles Side navbar -->
@@ -100,11 +100,25 @@
                             <span>Companies</span></a>
                     </li>
                 @endcan
+                @can('viewAny', App\Models\Customer::class)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('customers.index') }}">
+                        <i class="fas fa-fw fa-users"></i>
+                        <span>Customer</span></a>
+                </li>
+                @endcan
                 @can('viewAny', App\Models\Product::class)
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('products.index') }}">
                         <i class="fas fa-fw fa-shopping-basket"></i>
                         <span>Products</span></a>
+                </li>
+                @endcan
+                @can('viewAny', App\Models\Invoice::class)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('invoices.index') }}">
+                        <i class="fas fa-fw fa-file-invoice-dollar"></i>
+                        <span>Invocies</span></a>
                 </li>
                 @endcan
             @endif

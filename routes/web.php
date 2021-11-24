@@ -84,6 +84,15 @@ Route::middleware(['auth','isApproved'])->group(function () {
     Route::patch('/customers/{customer}', [App\Http\Controllers\CustomerController::class, 'update'])->name('customers.update');
     Route::delete('/customers/{customer}', [App\Http\Controllers\CustomerController::class, 'destroy'])->name('customers.destroy');
     Route::get('/customers/delete/{customer}', [App\Http\Controllers\CustomerController::class, 'delete'])->name('customers.delete');
+    //INVOICES ROUTES
+    Route::get('/invoices', [App\Http\Controllers\InvoiceController::class, 'index'])->name('invoices.index');
+    Route::get('/invoices/create/{customer}', [App\Http\Controllers\InvoiceController::class, 'create'])->name('invoices.create');
+    Route::post('/invoices', [App\Http\Controllers\InvoiceController::class, 'store'])->name('invoices.store');
+    Route::get('/invoices/{invoice}/edit', [App\Http\Controllers\InvoiceController::class, 'edit'])->name('invoices.edit');
+    Route::put('/invoices/{invoice}', [App\Http\Controllers\InvoiceController::class, 'update'])->name('invoices.update');
+    Route::patch('/invoices/{invoice}', [App\Http\Controllers\InvoiceController::class, 'update'])->name('invoices.update');
+    Route::delete('/invoices/{invoice}', [App\Http\Controllers\InvoiceController::class, 'destroy'])->name('invoices.destroy');
+    Route::get('/invoices/delete/{invoice}', [App\Http\Controllers\InvoiceController::class, 'delete'])->name('invoices.delete');
 });
 
 //AUTHENTICATION ROUTES

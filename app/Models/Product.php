@@ -20,4 +20,8 @@ class Product extends Model
         'sales_price',
         'cost',
     ];
+
+    public function invocies(){
+        return $this->belongsToMany(Invoice::class)->withPivot('quantity');
+    }
 }

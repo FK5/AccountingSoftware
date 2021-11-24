@@ -8,6 +8,7 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Permission;
+use Illuminate\Support\Collection;
 
 class ProductController extends Controller
 {
@@ -28,12 +29,12 @@ class ProductController extends Controller
         }else{
             //IF WEBMASTER GET PRODUCTS OWNED BY COMPMNY THAT WEBMASTER BELONGS TO
             if($role->id == $user->isWebMaster()){
-                $companies = Company::where('user_id', $user_id)->get();
+                $companies = Company::where('user_id', $user_id)->get('id');
                 $products = Product::whereIn('company_id',$companies)->get();
             }
             //IF OFFICER GET PRODUCTS OWNED BY COMPMNY THAT OFFICER ASSIGNED TO
             elseif($role->id == $user->isOfficer()){
-                $companies = $user->companies;
+                $companies = $user->companies->pluck('id');
                 $products = Product::whereIn('company_id',$companies)->get();
             }
         }
