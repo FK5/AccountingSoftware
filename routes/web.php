@@ -21,7 +21,7 @@ use App\Models\Company;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('home'));
 });
 
 Route::get('/test', function () {
@@ -35,28 +35,28 @@ Route::get('/test', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth','isApproved'])->group(function () {
+    // Route::middleware(['isSuperAdmin'])->group(function () {
     //USER ROUTES
-    Route::middleware(['isSuperAdmin'])->group(function () {
-        Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index')->middleware(['auth','isSuperAdmin']);
-        Route::get('/users/create', [App\Http\Controllers\UserController::class, 'create'])->name('users.create');
-        Route::post('/users', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
-        Route::get('/users/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
-        Route::put('/users/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
-        Route::patch('/users/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
-        Route::delete('/users/{user}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
-        Route::get('/users/delete/{user_id}', [App\Http\Controllers\UserController::class, 'delete'])->name('users.delete');
-        //ROLE ROUTES
-        Route::get('/roles', [App\Http\Controllers\RoleController::class, 'index'])->name('roles.index');
-        Route::get('/roles/create', [App\Http\Controllers\RoleController::class, 'create'])->name('roles.create');
-        Route::post('/roles', [App\Http\Controllers\RoleController::class, 'store'])->name('roles.store');
-        Route::get('/roles/{role}/edit', [App\Http\Controllers\RoleController::class, 'edit'])->name('roles.edit');
-        Route::put('/roles/{role}', [App\Http\Controllers\RoleController::class, 'update'])->name('roles.update');
-        Route::patch('/roles/{role}', [App\Http\Controllers\RoleController::class, 'update'])->name('roles.update');
-        Route::delete('/roles/{role}', [App\Http\Controllers\RoleController::class, 'destroy'])->name('roles.destroy');
-        Route::get('/roles/delete/{role}', [App\Http\Controllers\RoleController::class, 'delete'])->name('roles.delete');
-        Route::put('/roles/{role}/attach/', [App\Http\Controllers\RoleController::class, 'attachPermission'])->name('roles.permissions.attach');
-        Route::put('/roles/{role}/detach/', [App\Http\Controllers\RoleController::class, 'detachPermission'])->name('roles.permissions.detach');
-    });
+    Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [App\Http\Controllers\UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
+    Route::get('/users/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+    Route::patch('/users/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{user}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
+    Route::get('/users/delete/{user_id}', [App\Http\Controllers\UserController::class, 'delete'])->name('users.delete');
+    //ROLE ROUTES
+    Route::get('/roles', [App\Http\Controllers\RoleController::class, 'index'])->name('roles.index');
+    Route::get('/roles/create', [App\Http\Controllers\RoleController::class, 'create'])->name('roles.create');
+    Route::post('/roles', [App\Http\Controllers\RoleController::class, 'store'])->name('roles.store');
+    Route::get('/roles/{role}/edit', [App\Http\Controllers\RoleController::class, 'edit'])->name('roles.edit');
+    Route::put('/roles/{role}', [App\Http\Controllers\RoleController::class, 'update'])->name('roles.update');
+    Route::patch('/roles/{role}', [App\Http\Controllers\RoleController::class, 'update'])->name('roles.update');
+    Route::delete('/roles/{role}', [App\Http\Controllers\RoleController::class, 'destroy'])->name('roles.destroy');
+    Route::get('/roles/delete/{role}', [App\Http\Controllers\RoleController::class, 'delete'])->name('roles.delete');
+    Route::put('/roles/{role}/attach/', [App\Http\Controllers\RoleController::class, 'attachPermission'])->name('roles.permissions.attach');
+    Route::put('/roles/{role}/detach/', [App\Http\Controllers\RoleController::class, 'detachPermission'])->name('roles.permissions.detach');
+    // });
     //COMPANY ROUTES
     Route::get('/companies', [App\Http\Controllers\CompanyController::class, 'index'])->name('companies.index');
     Route::get('/companies/create', [App\Http\Controllers\CompanyController::class, 'create'])->name('companies.create');
