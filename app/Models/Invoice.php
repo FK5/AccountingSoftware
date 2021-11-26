@@ -20,12 +20,19 @@ class Invoice extends Model
         'invoice_date',
         'due_date',
         'invoice_number',
+        'notes',
         'discount',
         'subtotal',
         'total',
     ];
 
-    public function products(){
-        return $this->belongsToMany(Product::class)->withPivot('quantity');
+    /**
+     * Get all of the items for the Invoice
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function items()
+    {
+        return $this->hasMany(InvoiceItems::class);
     }
 }

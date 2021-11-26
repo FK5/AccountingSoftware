@@ -20,6 +20,7 @@ class CreateInvoicesTable extends Migration
             $table->date('invoice_date');
             $table->date('due_date');
             $table->string('invoice_number')->unique();
+            $table->string('notes');
             $table->string('discount')->nullable();
             $table->double('subtotal', 8, 2);
             $table->double('total', 8, 2);
