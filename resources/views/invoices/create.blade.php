@@ -65,7 +65,7 @@
                             <td>{{ $product->title }}</td>
                             <td>{{ $product->sales_price }}</td>
                             <td>
-                              <input type="hidden" name="product_id[]" value="{{ $product->id }}">
+                              <input type="hidden" name="product_title[]" value="{{ $product->title }}">
                               <input type="hidden" name="sales_price[]" value="{{ $product->sales_price }}">
                               <input type="number" name="quantity[]" value="0" min="0" max="100">
                             </td>
@@ -95,6 +95,13 @@
               <option value="percent">%</option>
 
             </select>
+          </div>
+          <div class="mb-3">
+            <label for="notes" class="form-label">Notes</label>
+            <input type="text" class="form-control @if($errors->has('notes'))is-invalid @endif" id="notes" name="notes"  aria-describedby="emailHelp">
+            @if ($errors->has('notes'))
+                    <span class="text-danger">{{ $errors->first('Notes') }}</span>
+            @endif
           </div>
           <!--  SHOULD BE AUTO CALCULATED  -->
           <div class="mb-3">

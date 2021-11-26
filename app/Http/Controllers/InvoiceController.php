@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Company;
 use App\Models\Product;
+use App\Models\InvoiceItems;
 use Auth;
 
 class InvoiceController extends Controller
@@ -67,6 +68,7 @@ class InvoiceController extends Controller
             'customer_id' => 'required|not in:Open this select menu',
             'billing_address' => 'required|max:255',
             'due_date' => 'required|date',
+            'notes' => 'required',
             'discount' => 'nullable',
         ];
         $date = now();
@@ -78,7 +80,7 @@ class InvoiceController extends Controller
         $data['invoice_number']=$company_name;
         $data['invoice_date'] = $date;
         $subtotal = 0;
-        for ($i = 0; $i < count($data['product_id']); $i++) {
+        for ($i = 0; $i < count($data['product_title']); $i++) {
             $subtotal = $subtotal + ($data['quantity'][$i] * $data['sales_price'][$i]);
         }
         $total = $subtotal;
@@ -93,11 +95,16 @@ class InvoiceController extends Controller
         }
         $data['subtotal'] = $subtotal;
         $data['total'] = $total;
-        // dd($data);
         $invoice = Invoice::create($data);
-        for ($i = 0; $i < count($data['product_id']); $i++) {
+        for ($i = 0; $i < count($data['product_title']); $i++) {
             if(!empty($data['quantity'][$i])){
-                $invoice->products()->attach($data['product_id'][$i], ['quantity' => $data['quantity'][$i]]);
+                InvoiceItems::create([
+                    'invoice_id' => $invoice->id,
+                    'product_title' => $data['product_title'][$i],
+                    'quantity' => $data['quantity'][$i],
+                    'unit_price' => $data['sales_price'][$i],
+                    'total' => $data['quantity'][$i] * $data['sales_price'][$i],
+                ]);
             }
         }
         
@@ -126,8 +133,8 @@ class InvoiceController extends Controller
         $this->authorize('update',$invoice);
         $customer = Customer::findOrFail($invoice->customer_id);
         $products = Product::where('company_id',$customer->company_id)->get();
-        // dd($invoice->products);
-        return view('invoices.edit',compact('invoice','products'));
+        $invoice_items = InvoiceItems::where('invoice_id',$invoice->id)->get();
+        return view('invoices.edit',compact('invoice','products','customer','invoice_items'));
     }
 
     /**
@@ -150,7 +157,7 @@ class InvoiceController extends Controller
         $data = $request->all();
         $customer = Customer::find($data['customer_id']);
         $subtotal = 0;
-        for ($i = 0; $i < count($data['product_id']); $i++) {
+        for ($i = 0; $i < count($data['product_title']); $i++) {
             $subtotal = $subtotal + ($data['quantity'][$i] * $data['sales_price'][$i]);
         }
         $total = $subtotal;
@@ -165,14 +172,18 @@ class InvoiceController extends Controller
         }
         $data['subtotal'] = $subtotal;
         $data['total'] = $total;
-        // dd($data);
-        // $invoice = Invoice::create($data);
         $invoice->update($data);
         $invoice->save();
-        $invoice->products()->detach();
-        for ($i = 0; $i < count($data['product_id']); $i++) {
+        $invoice->items()->delete();
+        for ($i = 0; $i < count($data['product_title']); $i++) {
             if(!empty($data['quantity'][$i])){
-                $invoice->products()->attach($data['product_id'][$i], ['quantity' => $data['quantity'][$i]]);
+                InvoiceItems::create([
+                    'invoice_id' => $invoice->id,
+                    'product_title' => $data['product_title'][$i],
+                    'quantity' => $data['quantity'][$i],
+                    'unit_price' => $data['sales_price'][$i],
+                    'total' => $data['quantity'][$i] * $data['sales_price'][$i],
+                ]);
             }
         }
         
