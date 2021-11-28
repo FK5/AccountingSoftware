@@ -50,6 +50,8 @@
                            <td>{{ $customer->address }}</td>
                             <td>
                                 <a href="{{ route('invoices.create',$customer->id) }}" class="btn btn-success">Add Invoice</a>
+                                <a href="{{ route('payments.create',$customer->id) }}" class="btn btn-success">Add Payment</a>
+                                <a href="{{ route('payments.assign',$customer->id) }}" class="btn btn-success">Assign Payment</a>
                                 <a href="{{ route('customers.edit',$customer->id) }}" class="btn btn-primary">Edit</a>
                                 <a href="{{ route('customers.delete',$customer->id) }}" class="btn btn-danger">Delete</a>
                             </td>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Invoice;
 
 class customer extends Model
 {
@@ -25,4 +26,12 @@ class customer extends Model
         'company_id',
     ];
     
+
+    public function getBalanceAttribute()
+    {
+        $balance = 0;
+        $invoice_balance = Invoice::where('customer_id',$this->id)->sum('total');
+        $payment_balance = Payment::where('customer_id',$this->id)->sum('amount');
+        return $payment_balance-$invoice_balance;
+    }   
 }
