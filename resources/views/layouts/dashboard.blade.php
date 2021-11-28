@@ -87,7 +87,7 @@
                         <span>Invoices</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">
+                    <a class="nav-link" href="{{ route('payments.index') }}">
                         <i class="fas fa-fw fa-money-bill-wave"></i>
                         <span>Payments</span></a>
                 </li>
@@ -119,6 +119,13 @@
                     <a class="nav-link" href="{{ route('invoices.index') }}">
                         <i class="fas fa-fw fa-file-invoice-dollar"></i>
                         <span>Invocies</span></a>
+                </li>
+                @endcan
+                @can('viewAny', App\Models\Payment::class)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('payments.index') }}">
+                        <i class="fas fa-fw fa-money-bill-wave"></i>
+                        <span>Payments</span></a>
                 </li>
                 @endcan
             @endif

@@ -35,4 +35,12 @@ class Invoice extends Model
     {
         return $this->hasMany(InvoiceItems::class);
     }
+    
+    protected $appends = ['amount_unpaid'];
+
+    public function getAmountUnpaidAttribute()
+    {
+        $payment_items = PaymentItems::where('invoice_id',$this->id)->sum('amount');
+        return $this->total-$payment_items;
+    } 
 }

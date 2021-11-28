@@ -24,6 +24,7 @@ class CompanyFactory extends Factory
             'industry' => 'Entertainment',
             'website' => $company_name.".com",
             'approved' => $this->faker->numberBetween(0, 1),
+            'user_id' => $this->faker->randomElement([null, rand(1,5)]),
         ];
     }
 
