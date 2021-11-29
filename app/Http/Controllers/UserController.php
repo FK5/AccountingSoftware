@@ -61,6 +61,7 @@ class UserController extends Controller
             'gender' => 'in:male,female,other',
             'date_of_birth' => 'date',
             'status' => 'in:approved,pending,blocked',
+            
         ];
         $this->validate($request, $rules);
         $data = $request->all();
@@ -93,7 +94,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user_id = Auth::user()->id;
+        $user_id = Auth::user();
         if (! Gate::allows('super-admin',$user_id)) {
             abort(403);
         }
@@ -112,9 +113,9 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user_id = Auth::user()->id;
-        if (! Gate::allows('super-admin',$user_id)) {
-            abort(403);
-        }
+        // if (! Gate::allows('super-admin',$user_id)) {
+        //     abort(403);
+        // }
         $rules = [
             'first_name' => 'max:255',
             'last_name' => 'max:255',
@@ -133,9 +134,13 @@ class UserController extends Controller
         }
         $user = User::findorFail($id);
         $user->update($data);
-        $user->status = $request->status;
+        if(isset($request->status))$user->status = $request->status;
+        if(isset($data['role_id']) && $data['role_id'] != 'Open this select menu')$user->role_id = $data['role_id'];
         $user->save();
+        if($user->id==1)
         return redirect()->route('users.index');
+        else
+        return redirect()->route('home');
     }
 
     /**
@@ -163,5 +168,12 @@ class UserController extends Controller
         }
         $user = User::findOrFail($id);
         return view('users.delete', ['user'=>$user]);
+    }
+
+    public function profile()
+    {
+        $user = Auth::user();
+        $roles = Role::all();
+        return view('users.edit',compact('user','roles'));
     }
 }

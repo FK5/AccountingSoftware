@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -96,7 +97,8 @@ class CompanyController extends Controller
     public function edit(company $company)
     {
         $this->authorize('update',$company);
-        return view('companies.edit', compact('company'));
+        $users = User::where('role_id',Role::IS_COMPANY_WEBMASTER)->get();
+        return view('companies.edit', compact('company','users'));
     }
 
     /**
@@ -147,5 +149,23 @@ class CompanyController extends Controller
     {
         $this->authorize('delete',$company);
         return view('companies.delete', ['company'=>$company]);
+    }
+
+    public function assign(Company $company)
+    {
+        $this->authorize('update',$company);
+        $users = User::where('role_id',Role::IS_COMPANY_OFFICER)->get();
+        return view('companies.assign', compact('company','users'));
+    }
+
+    public function attachOfficer(Request $request, Company $company)
+    {
+        $company->users()->attach($request->user_id);
+        return redirect()->back();
+    }
+    public function detachOfficer(Request $request, Company $company)
+    {
+        $company->users()->detach($request->user_id);
+        return redirect()->back();
     }
 }

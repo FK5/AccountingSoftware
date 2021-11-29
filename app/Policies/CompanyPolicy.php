@@ -21,19 +21,7 @@ class CompanyPolicy
      */
     public function viewAny(User $user)
     {
-        if($user->id==1){
-            return true;
-        }
-        $role = $user->role;
-        if(!empty($role)){
-            $permissions = $role->permissions;
-            foreach($permissions as $permission){
-                if($permission->id == Permission::CAN_READ_COMPANY){
-                    return true;   
-                }
-            }
-        }
-        return false;
+        return $user->checkPermission(Permission::CAN_READ_COMPANY);
     }
 
     /**

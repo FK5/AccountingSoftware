@@ -35,4 +35,14 @@ class company extends Model
     {
         return $this->hasMany('App\Models\Product');
     }
+
+    /**
+     * The users that belong to the Company
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

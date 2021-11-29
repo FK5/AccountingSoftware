@@ -28,5 +28,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('super-admin', function ($user) {
             return $user->id == 1;
         });
+
     }
 }

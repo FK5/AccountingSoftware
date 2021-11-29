@@ -18,20 +18,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //Super User Seed
-        if(!User::find(1)){
-            DB::table('users')->insert([
-                'first_name' => 'super',
-                'last_name' => 'admin',
-                'email' => 'superadmin@mail.com',
-                'gender' => 'other',
-                'status' => 'approved',
-                'date_of_birth' => now(),
-                'email_verified_at' => now(),
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-                'remember_token' => Str::random(10),
-            ]);
-        }
+
         //Roles Seed
         if(!Role::find(1)){
             DB::table('roles')->insert([
@@ -47,6 +34,21 @@ class DatabaseSeeder extends Seeder
                 'slug' => 'Company Officer',
             ]);
         }
+        //Super Admin Seed
+        if(!User::find(1)){
+            DB::table('users')->insert([
+                'first_name' => 'super',
+                'last_name' => 'admin',
+                'email' => 'superadmin@mail.com',
+                'gender' => 'other',
+                'status' => 'approved',
+                'date_of_birth' => now(),
+                'email_verified_at' => now(),
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'remember_token' => Str::random(10),
+            ]);
+            
+        }    
         //Companies permission
             DB::table('permissions')->insert([
                 'name' => 'can_read_company',
@@ -307,6 +309,44 @@ class DatabaseSeeder extends Seeder
         \App\Models\Company::factory(5)->create();
         \App\Models\Customer::factory(10)->create();
         \App\Models\Product::factory(15)->create();
+
+        //USERS WITH ROLES SEED
+        DB::table('users')->insert([
+            'first_name' => 'manager',
+            'last_name' => '(companies)',
+            'email' => 'manager@mail.com',
+            'gender' => 'other',
+            'status' => 'approved',
+            'role_id'=> 1,
+            'date_of_birth' => now(),
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+        ]);
+        DB::table('users')->insert([
+            'first_name' => 'company',
+            'last_name' => 'webmaster',
+            'email' => 'webmaster@mail.com',
+            'gender' => 'other',
+            'status' => 'approved',
+            'role_id'=> 2,
+            'date_of_birth' => now(),
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+        ]);
+        DB::table('users')->insert([
+            'first_name' => 'company',
+            'last_name' => 'officer',
+            'email' => 'officer@mail.com',
+            'gender' => 'other',
+            'status' => 'approved',
+            'role_id'=> 3,
+            'date_of_birth' => now(),
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+        ]);
         
     }
 }

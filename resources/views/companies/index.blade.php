@@ -61,6 +61,7 @@
                                 @endif
                             </td>
                             <td>
+                                <a href="{{ route('companies.assign',$company->id) }}" class="btn btn-success">Assign Officer</a>
                                 <a href="{{ route('companies.edit',$company->id) }}" class="btn btn-primary">Edit</a>
                                 <a href="{{ route('companies.delete',$company->id) }}" class="btn btn-danger">Delete</a>
                             </td>

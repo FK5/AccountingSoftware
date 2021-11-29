@@ -24,8 +24,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'gender',
         'date_of_birth',
         'password',
-        
-
     ];
 
     /**
@@ -76,5 +74,21 @@ class User extends Authenticatable implements MustVerifyEmail
         }else{
             return false;
         }
+    }
+
+    public function checkPermission($permission_arg){
+        if($this->id==1){
+            return true;
+        }
+        $role = $this->role;
+        if(!empty($role)){
+            $permissions = $role->permissions;
+            foreach($permissions as $permission){
+                if($permission->id == $permission_arg){
+                    return true;   
+                }
+            }
+        }
+        return false;
     }
 }

@@ -30,7 +30,7 @@
             @endif
           </div>
           <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
+            <label for="password" class="form-label">Change Password</label>
             <input type="password" class="form-control @if($errors->has('password'))is-invalid @endif" id="password" name="password"  aria-describedby="emailHelp">
             @if ($errors->has('password'))
                     <span class="text-danger">{{ $errors->first('password') }}</span>
@@ -53,16 +53,16 @@
                     <span class="text-danger">{{ $errors->first('date_of_birth') }}</span>
             @endif
           </div>
-
+          @if(Auth::user()->id == 1)
           <div class="mb-1">
             <label for="status" class="form-label">Status: {{ $user->status }}</label>
           </div>
           <div class="mb-3">
             <select class="form-select @if($errors->has('status'))is-invalid @endif" name="status" aria-label="Default select example">
               <option selected>Open this select menu</option>
-              <option value="approved">Approved</option>
-              <option value="pending">Pending</option>
-              <option value="blocked">Blocked</option>
+              <option value="approved" @if ($user->status == 'approved') selected @endif>Approved</option>
+              <option value="pending" @if ($user->status == 'pending') selected @endif>Pending</option>
+              <option value="blocked" @if ($user->status == 'blocked') selected @endif>Blocked</option>
             </select>
             @if ($errors->has('status'))
                     <span class="text-danger">{{ $errors->first('status') }}</span>
@@ -83,6 +83,7 @@
                     <span class="text-danger">{{ $errors->first('role_id') }}</span>
             @endif
           </div>
+          @endif
 
           <button type="submit" class="btn btn-primary">Update</button>
         </div>
