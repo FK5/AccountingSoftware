@@ -69,18 +69,20 @@
             @endif
           </div>
           
-          {{-- <div class="mb-3">       //company
-            <label for="company_id" class="form-label">Company</label>
-            <select class="form-select @if($errors->has('company_id'))is-invalid @endif" name="company_id" aria-label="Default select example">
+          <div class="mb-1">
+            <label for="role_id" class="form-label">Role: </label>
+          </div>
+          <div class="mb-3">
+            <select class="form-select @if($errors->has('role_id'))is-invalid @endif" name="role_id" aria-label="Default select example">
               <option selected>Open this select menu</option>
-              @foreach ($companies as $company)
-                <option value="{{$company->id}}">{{$company->company_name}}</option>
+              @foreach ($roles as $role)
+                <option value="{{$role->id}}">{{$role->slug}}</option> )
               @endforeach
             </select>
-            @if ($errors->has('company_id'))
-                    <span class="text-danger">{{ $errors->first('company_id') }}</span>
+            @if ($errors->has('role_id'))
+                    <span class="text-danger">{{ $errors->first('role_id') }}</span>
             @endif
-          </div> --}}
+          </div>
 
           <button type="submit" class="btn btn-primary">Create</button>
         </div>
