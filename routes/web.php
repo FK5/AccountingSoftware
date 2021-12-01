@@ -26,6 +26,11 @@ Route::get('/', function () {
     return redirect(route('home'));
 });
 
+Route::get('/test', function () {
+    return $companies_created = Company::where('user_id',Auth::user()->id)->count();
+});
+
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth','isApproved'])->group(function () {

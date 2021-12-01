@@ -21,6 +21,6 @@ class IsApproved
         if($status == 'approved'){
             return $next($request);
         }
-        abort(403);
+        abort(403, 'Your account is not appproved, please contact admin.');
     }
 }

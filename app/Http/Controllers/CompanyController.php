@@ -18,12 +18,19 @@ class CompanyController extends Controller
     public function index()
     {
         $this->authorize('viewAny',Company::class);
+        $user = Auth::user();
         $user_role = Auth::user()->role;
         if(!empty($user_role)){
-            if($user_role->id == Role::IS_COMPANY_WEBMASTER){
-                $companies = Company::all()->where('user_id',Auth::user()->id);
-            }else{
-                $companies = Company::all();
+            switch ($user_role->id) {
+                case Role::MANAGER:
+                    $companies = Company::all();
+                    break;
+                case Role::COMPANY_WEBMASTER:
+                    $companies = Company::all()->where('user_id',Auth::user()->id);
+                    break;
+                case Role::COMPANY_OFFICER:
+                    $companies = $user->companies;
+                    break;
             }
         }else{
             $companies = Company::all();
@@ -39,7 +46,8 @@ class CompanyController extends Controller
     public function create()
     {
         $this->authorize('create',Company::class);
-        return view('companies.create');
+        $users = User::where('role_id',Role::COMPANY_WEBMASTER)->orWhereNull('role_id')->get()->forget(1);
+        return view('companies.create', compact('users'));
     }
 
     /**
@@ -55,7 +63,7 @@ class CompanyController extends Controller
         $rules = [
             'company_name' => 'required|max:255',
             'legal_name' => 'required|max:255',
-            'business_id' => 'required|max:255',
+            'business_id' => 'required|unique:companies|max:255',
             'company_email' => 'required|max:255|email',
             'company_phone_number' => 'required|max:255',
             'company_address' => 'required|max:255',
@@ -65,27 +73,22 @@ class CompanyController extends Controller
 
         $this->validate($request, $rules);
 
-        if(!$request->has('approved'))$approved=false;else$approved=true;
         $data = $request->all();
-        $data['approved']= $approved;
-        
-        $latest = Company::create($data);
-        if($user->role->id == Role::IS_COMPANY_WEBMASTER){
-            $latest->user_id = $user->id;
+        if(!empty($user->role)){
+            if($user->role->id == Role::COMPANY_WEBMASTER){
+                $data['user_id']= $user->id;
+            }
         }
-        $latest->save();
+        if(!empty($data['user_id'])){
+            $user_id = $data['user_id'];
+            $user = User::findOrFail($user_id);
+            if(empty($user->role)){
+                $user->role_id = Role::COMPANY_WEBMASTER;
+                $user->save();
+            }
+        }
+        Company::create($data);
         return redirect()->route('companies.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\company  $company
-     * @return \Illuminate\Http\Response
-     */
-    public function show(company $company)
-    {
-        //
     }
 
     /**
@@ -97,7 +100,7 @@ class CompanyController extends Controller
     public function edit(company $company)
     {
         $this->authorize('update',$company);
-        $users = User::where('role_id',Role::IS_COMPANY_WEBMASTER)->get();
+        $users = User::where('role_id',Role::COMPANY_WEBMASTER)->orWhereNull('role_id')->get()->forget(1);
         return view('companies.edit', compact('company','users'));
     }
 
@@ -123,11 +126,16 @@ class CompanyController extends Controller
         ];
 
         $this->validate($request, $rules);
-
-        if(!$request->has('approved'))$approved=false;else$approved=true;
         $data = $request->all();
-        $data['approved']= $approved;
-
+        if(!empty($data['approved']) && $data['approved']=='on')$data['approved']=1;
+        if(!empty($data['user_id'])){
+            $user_id = $data['user_id'];
+            $user = User::findOrFail($user_id);
+            if(empty($user->role) && $user->id != 1){
+                $user->role_id = Role::COMPANY_WEBMASTER;
+                $user->save();
+            }
+        }
         $company->update($data);
         return redirect()->route('companies.index');
     }
@@ -154,7 +162,7 @@ class CompanyController extends Controller
     public function assign(Company $company)
     {
         $this->authorize('update',$company);
-        $users = User::where('role_id',Role::IS_COMPANY_OFFICER)->get();
+        $users = User::where('role_id',Role::COMPANY_OFFICER)->get();
         return view('companies.assign', compact('company','users'));
     }
 

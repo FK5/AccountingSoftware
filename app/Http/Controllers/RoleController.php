@@ -87,7 +87,7 @@ class RoleController extends Controller
         if (! Gate::allows('super-admin',$user_id)) {
             abort(403);
         }
-        $permissions = Permission::all()->forget([4,5,6,7]);
+        $permissions = Permission::all();
         return view('roles.edit', compact('role', 'permissions'));
     }
 

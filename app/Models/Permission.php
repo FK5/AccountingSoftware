@@ -15,14 +15,17 @@ class permission extends Model
         'slug',
     ];
 
+    //company
     public const CAN_READ_COMPANY = 1;
     public const CAN_CREATE_COMPANY = 2;
-    public const CAN_EDIT_COMPANY = 3;
-    public const CAN_DELETE_COMPANY = 4;
-    public const CAN_READ_USER = 5;
-    public const CAN_CREATE_USER = 6;
-    public const CAN_EDIT_USER = 7;
-    public const CAN_DELETE_USER = 8;
+    public const CAN_CREATE_ONE_COMPANY = 3;
+    public const CAN_EDIT_OWN_COMPANY = 4;
+    public const CAN_EDIT_ASSIGNED_COMPANY = 5;
+    public const CAN_EDIT_ALL_COMPANY = 6;
+    public const CAN_DELETE_OWN_COMPANY = 7;
+    public const CAN_DELETE_ASSIGNED_COMPANY = 8;
+    public const CAN_DELETE_ALL_COMPANY = 9;
+    //
     public const CAN_READ_CUSTOMER = 9;
     public const CAN_CREATE_CUSTOMER = 10;
     public const CAN_EDIT_CUSTOMER = 11;
