@@ -15,9 +15,9 @@ class role extends Model
         'slug',
     ];
 
-    public const IS_MANAGER = 1;
-    public const IS_COMPANY_WEBMASTER = 2;
-    public const IS_COMPANY_OFFICER = 3;
+    public const MANAGER = 1;
+    public const COMPANY_WEBMASTER = 2;
+    public const COMPANY_OFFICER = 3;
 
     /**
      * The roles that belong to the permission

@@ -64,6 +64,17 @@
                     <span class="text-danger">{{ $errors->first('website') }}</span>
             @endif
           </div>
+          {{-- <div class="mb-3">
+            <select class="form-select @if($errors->has('user_id'))is-invalid @endif" name="user_id" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              @foreach ($users as $user)
+                <option>{{ $user->first_name." ".$user->last_name }}</option>
+              @endforeach
+            </select>
+            @if ($errors->has('user_id'))
+                    <span class="text-danger">{{ $errors->first('user_id') }}</span>
+            @endif
+          </div> --}}
           @if(Auth::user()->id == 1 or Auth::user()->isManager())
             <div class="mb-3 form-check">
               <input type="checkbox" class="form-check-input" id="approved" name="approved" >

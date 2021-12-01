@@ -24,6 +24,7 @@ class company extends Model
         'industry',
         'website',
         'approved',
+        'user_id',
     ];
 
     // public function users()

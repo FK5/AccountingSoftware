@@ -45,7 +45,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    
+    //Relations Functions
     public function role (){
         return $this->belongsTo(Role::class);
     }
@@ -53,41 +53,31 @@ class User extends Authenticatable implements MustVerifyEmail
     public function companies(){
         return $this->belongsToMany(Company::class);
     }
-
+    //Role Check Functions
     public function isManager(){
-        if($this->role->id == Role::IS_MANAGER){
-            return true;
-        }else{
-            return false;
-        }
+        return $this->role->id == Role::MANAGER;
     }
     public function isWebMaster(){
-        if($this->role->id == Role::IS_COMPANY_WEBMASTER){
-            return true;
-        }else{
-            return false;
-        }
+        return $this->role->id == Role::COMPANY_WEBMASTER;
     }
     public function isOfficer(){
-        if($this->role->id == Role::IS_COMPANY_OFFICER){
-            return true;
-        }else{
-            return false;
-        }
+        return $this->role->id == Role::COMPANY_OFFICER;
+    }
+    //Get permissions
+    public function getPermissions(){
+        $role = $this->role;
+        return !empty($role) ? $role->permissions : [];
     }
 
-    public function checkPermission($permission_arg){
+    //Check permission
+    public function checkPermission($permission){
         if($this->id==1){
             return true;
         }
-        $role = $this->role;
-        if(!empty($role)){
-            $permissions = $role->permissions;
-            foreach($permissions as $permission){
-                if($permission->id == $permission_arg){
-                    return true;   
-                }
-            }
+        $user_permissions = $this->getPermissions(); 
+        foreach ($user_permissions as $user_permission) {
+            if($user_permission->id == $permission)
+                return true;
         }
         return false;
     }
